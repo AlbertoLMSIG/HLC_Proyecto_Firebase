@@ -7,7 +7,6 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-fab-button style=" position: fixed; right: 0;bottom: 0; margin:10px;" (click)="clickBotonInsertar()">Añadir</ion-fab-button>
   <h1>Lista de Farmaceuticas</h1>
   <ion-list>
     <ion-item *ngFor="let documentTarea of arrayColeccionTareas" (click)="selecTarea(documentTarea)">
@@ -21,4 +20,5 @@
       </ion-grid>
     </ion-item>
   </ion-list>
+  <ion-fab-button class="Añadir secundario" style=" position: fixed; right: 0;bottom: 0; margin:10px;" (click)="clickBotonInsertar()">Añadir</ion-fab-button>
 </ion-content>
