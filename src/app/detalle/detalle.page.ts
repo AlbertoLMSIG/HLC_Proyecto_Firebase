@@ -65,7 +65,7 @@ export class DetallePage implements OnInit {
 
   async presentAlert() {
     const alert = await this.alertController.create({
-      header: '¡¿Quieres borrar el televisor?!',
+      header: '¿Deseas eliminar la farmaceutica?',
       buttons: [
         {
           text: 'No',
@@ -106,7 +106,7 @@ export class DetallePage implements OnInit {
   clickBotonInsertar() {
     this.firestoreService.insertar('datos', this.document.data).then(
       () => {
-        console.log('Dato creado correctamente');
+        console.log('Farmaceurica creado correctamente');
         // //Limpiamos el contenido de televisrorEditanto
         this.document.data = {} as Dato;
       },
@@ -121,7 +121,7 @@ export class DetallePage implements OnInit {
 
   async presentToast(position: 'top') {
     const toast = await this.toastController.create({
-      message: 'Dato añadido correctamente',
+      message: 'Farmaceutica añadido correctamente',
       duration: 1500,
       position: position,
       color: 'success',

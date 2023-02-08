@@ -10,6 +10,8 @@
   <h1>Lista de Farmaceuticas</h1>
   <ion-list>
     <ion-item *ngFor="let documentTarea of arrayColeccionTareas" (click)="selecTarea(documentTarea)">
+      <img alt="Farmaceuticas" src="https://source.unsplash.com/random/1x1/?{{documentTarea.data.empresa}}" />
+
       <ion-grid>
         <ion-row>
           <h2>{{ documentTarea.data.empresa }}</h2>
