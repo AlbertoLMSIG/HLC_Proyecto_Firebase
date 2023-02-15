@@ -1,26 +1,32 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      AppBD
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
+  <ion-content [fullscreen]="true" class="primario">
 
-<ion-content [fullscreen]="true">
-  <h1>Lista de Farmaceuticas</h1>
-  <ion-list>
-    <ion-item *ngFor="let documentTarea of arrayColeccionTareas" (click)="selecTarea(documentTarea)">
-      <img alt="Farmaceuticas" src="https://source.unsplash.com/random/1x1/?{{documentTarea.data.empresa}}" />
-
-      <ion-grid>
-        <ion-row>
-          <h2>{{ documentTarea.data.empresa }}</h2>
-        </ion-row>
-        <ion-row>
-          <p>{{ documentTarea.data.medicamento }}</p>
-        </ion-row>
-      </ion-grid>
-    </ion-item>
-  </ion-list>
-  <ion-fab-button class="Añadir secundario" style=" position: fixed; right: 0;bottom: 0; margin:10px;" (click)="clickBotonInsertar()">Añadir</ion-fab-button>
-</ion-content>
+    <ion-card class="terciario">
+      <ion-card-header>
+        <ion-card-title>LISTADO DE FARMACEUTICAS</ion-card-title>
+        <ion-card-subtitle></ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-grid>
+          <ion-row>
+            <ion-col *ngFor="let documentTarea of arrayColeccionDato" (click)="selecFarmaceutica(documentTarea)"
+              size-xl="3" size-lg="3" size-md="4" size-sm="6" size-xs="12">
+              <ion-card>
+                <img alt="Farmaceutica"
+                  src="https://source.unsplash.com/random/500x500/?{{documentTarea.data.marca}}" />
+                <ion-card-header>
+                  <ion-card-title>
+                    <h1>{{documentTarea.data.empresa}}</h1>
+                    <h1>{{documentTarea.data.medicamento}}</h1>
+                  </ion-card-title>
+                </ion-card-header>
+              </ion-card>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card-content>
+    </ion-card>
+    <ion-fab-button class="Añadir secundario" color="primary" style="position: fixed; right: 0; bottom: 0; margin: 10px;" (click)="clickBotonInsertar()">
+      <ion-icon name="add-circle-outline"></ion-icon>
+    </ion-fab-button>
+      </ion-content>

@@ -1,78 +1,72 @@
 import { Component } from '@angular/core';
-import { Route } from '@angular/router';
-import { Dato } from '../dato';
 import { FirestoreService } from '../firestore.service';
+import { Dato } from '../dato';
 import { Router } from '@angular/router';
-
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
-
-  idTareaSelec: string;
+  idDatoSelec: string;
   tareaEditando: Dato;
-  arrayColeccionTareas: any = [{
-    id: "",
-    data: {} as Dato
-  }];
-  
-  constructor(private firestoreService: FirestoreService, private router: Router) {
-    // Crear una tarea vacia al empezar
+  arrayColeccionDato: any = [
+    {
+      id: '',
+      data: {} as Dato,
+    },
+  ];
+  constructor(private firestoreService: FirestoreService, private router:Router) {
     this.tareaEditando = {} as Dato;
-    this.obtenerListaTareas();
+
+    this.obtenerListaDatos();
   }
 
-  obtenerListaTareas() {
-    this.firestoreService.consultar("datos").subscribe((resultadoConsultaTareas) => {
-      this.arrayColeccionTareas = [];
-      resultadoConsultaTareas.forEach((datosTareas: any) => {
-        this.arrayColeccionTareas.push({
-          id: datosTareas.payload.doc.id,
-          data: datosTareas.payload.doc.data()
-        })
-      })
-    })
-  }
+  clickBotonInsertar() {    this.router.navigate(['/detalle', "nuevo"]);
 
-  clickBotonInsertar() {
-    this.router.navigate(['/detalle',"Nuevo"]);
-    this.firestoreService.insertar("datos", this.tareaEditando)
-      .then(() => {
-        console.log("Tarea creada correctamente");
-        this.tareaEditando = {} as Dato;
-      }, (error) => {
-        console.error(error)
+}
+
+obtenerListaDatos() {
+  this.firestoreService
+    .consultar('datos')
+    .subscribe((resultadoConsultaDatos) => {
+      this.arrayColeccionDato = [];
+      resultadoConsultaDatos.forEach((datosFarmaceutica: any) => {
+        this.arrayColeccionDato.push({
+          id: datosFarmaceutica.payload.doc.id,
+          data: datosFarmaceutica.payload.doc.data()
+        });
       });
-  }
+    });
+}
 
-  selecTarea(tareaSelec) {
-    console.log("-------------------------------------------------------------------------")
-    console.log("Farmaceutica ID: ",tareaSelec.id)
-    console.log("Empresa: ",tareaSelec.data.empresa, "Medicamento: ",tareaSelec.data.medicamento);
-    console.log("-------------------------------------------------------------------------")
-    this.idTareaSelec = tareaSelec.id;
-    this.tareaEditando.empresa = tareaSelec.data.empresa;
-    this.tareaEditando.medicamento = tareaSelec.data.medicamento;
-    this.router.navigate(['/detalle',this.idTareaSelec]);
-  }
 
-  clickBotonEliminar() {
-    this.firestoreService.borrar("datos", this.idTareaSelec).then(() => {
-      // Actualizar la lista completa
-      this.obtenerListaTareas();
-      // Limpiar datos de pantalla
-      this.tareaEditando = {} as Dato;
-    })
-  }
-  clicBotonModificar() {
-    console.log(this.idTareaSelec);
-    this.firestoreService.actualizar("datos", this.idTareaSelec, this.tareaEditando).then(() => {
-      // Actualizar la lista completa
-      this.obtenerListaTareas();
-      // Limpiar datos de pantalla
-      this.tareaEditando = {} as Dato;
-    })
-  }
+selecFarmaceutica(FarmaceuticaSelec) {
+  console.log("Televisor seleccionado: ");
+  console.log(FarmaceuticaSelec);
+  this.idDatoSelec = FarmaceuticaSelec.id;
+  this.tareaEditando.empresa = FarmaceuticaSelec.data.empresa;
+  this.tareaEditando.medicamento = FarmaceuticaSelec.data.medicamento;
+  this.router.navigate(['/detalle', this.idDatoSelec]);
+}
+
+clicBotonBorrar() {
+  this.firestoreService.borrar("datos", this.idDatoSelec).then(() => {
+    // Actualizar la lista completa
+    this.obtenerListaDatos();
+    // Limpiar datos de pantalla
+    this.tareaEditando = {} as Dato;
+  })
+}
+
+
+clicBotonModificar() {
+  this.firestoreService.actualizar("datos", this.idDatoSelec, this.tareaEditando).then(() => {
+    // Actualizar la lista completa
+    this.obtenerListaDatos();
+    // Limpiar datos de pantalla
+    this.tareaEditando = {} as Dato;
+  })
+}
+
 }
